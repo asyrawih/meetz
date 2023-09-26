@@ -1,9 +1,13 @@
+'use client'
 import Container from '@/components/custom/container'
+import '@livekit/components-styles';
 import Navbar from '@/components/custom/navbar'
 import { JoinRoom } from '@/components/section/joinRoom'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
+import { ControlBar, GridLayout, LiveKitRoom, ParticipantTile, RoomAudioRenderer, VideoConference, useTracks } from '@livekit/components-react'
+import { Track } from 'livekit-client'
 
 export default function Home() {
   return (
