@@ -4,7 +4,7 @@ import { ThemeProvider } from '@/components/custom/theme-provider'
 export default function RootLayout({ children, }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className='dark:border-gray-700 dark:bg-gray-900'>
+      <body className='dark:bg-card'>
         <ThemeProvider
           attribute='class'
           defaultTheme='system'
