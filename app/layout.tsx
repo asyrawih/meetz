@@ -1,3 +1,4 @@
+import { cva } from 'class-variance-authority'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
@@ -16,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className="mx-0 my-0 p-0">{children}</body>
     </html>
   )
 }
