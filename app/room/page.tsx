@@ -14,6 +14,7 @@ export default function Room() {
     },
   });
 
+  const url = process.env.NEXT_PUBLIC_LK_SERVER_URL
 
   return (
     <section className="h-screen">
@@ -22,7 +23,7 @@ export default function Room() {
         video={true}
         data-lk-theme="default"
         token={token}
-        serverUrl='ws://localhost:7880'
+        serverUrl={url}
       >
         <VideoConference />
       </LiveKitRoom>
