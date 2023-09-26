@@ -1,5 +1,5 @@
 'use client'
-import { LiveKitRoom, VideoConference, useToken } from "@livekit/components-react";
+import { FocusLayout, LiveKitRoom, VideoConference, useToken } from "@livekit/components-react";
 import '@livekit/components-styles';
 
 export default function Room() {

@@ -7,6 +7,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuIndicator,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuViewport,
+} from "@/components/ui/navigation-menu"
+
 import { Button } from "../ui/button"
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons"
 
@@ -24,12 +35,12 @@ export default function Navbar() {
         <a href="#" className="flex items-center">
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Meetz</span>
         </a>
-        <div className="hidden w-full md:block md:w-auto" id="navbar-dropdown">
-          <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-            <li>
-              <ThemeToggle />
-            </li>
+        <div className="hidden w-full md:block md:w-auto">
+          <ul className="inline-flex mx-3">
+            <li className="mx-2 cursor-pointer">Projects</li>
+            <li className="mx-2 cursor-pointer">About</li>
           </ul>
+          <ThemeToggle />
         </div>
       </div>
     </nav>
