@@ -1,13 +1,12 @@
-import React, { HTMLAttributes, forwardRef } from "react"
+import { cn } from "@/lib/utils";
+import { HTMLAttributes, forwardRef } from "react";
 
-const Container = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={className}
-    {...props}
-  />
-))
+const Container = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => {
+  return (
+    <div ref={ref} className={cn("max-w-screen-xl flex   mx-auto p-4", className)} {...props} />
+  )
+})
 
 Container.displayName = "Container"
 
-export default Container
+export { Container }
