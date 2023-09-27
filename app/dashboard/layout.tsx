@@ -4,10 +4,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { BackpackIcon, TimerIcon, EnvelopeOpenIcon, LightningBoltIcon, CalendarIcon } from '@radix-ui/react-icons'
+import Link from "next/link";
 
 export default function DashboardLayout({ children, }: { children: React.ReactNode }) {
   return (
-    <section>
+    <section className="flex">
       <Sidebar className="flex flex-col justify-between">
         <div className="sidebar-header-content">
           <SidebarHeader className="flex border border-gray-100-black">
@@ -17,29 +18,43 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
             </div>
           </SidebarHeader>
           <SidebarContent className="mt-4 mb-2">
-            <div className="mb-4 flex items-center">
-              <LightningBoltIcon />
-              <span className="font-semibold ml-3">Overview</span>
-            </div>
-            <div className="mb-4 flex items-center">
-              <CalendarIcon />
-              <span className="font-semibold ml-3">Calendar</span>
-            </div>
-            <div className="mb-4 flex items-center">
-              <BackpackIcon />
-              <span className="font-semibold ml-3">My Task</span>
-            </div>
-            <div className="mb-4 flex items-center">
-              <TimerIcon />
-              <span className="font-semibold ml-3">Schedule</span>
-            </div>
-            <div className="mb-4 flex items-center">
-              <EnvelopeOpenIcon className="font-bold" />
-              <span className="font-semibold ml-3">Notification</span>
-            </div>
+            <Link href={"/dashboard/overview"}>
+              <div className="mb-4 flex items-center cursor-pointer hover:text-blue-200">
+                <LightningBoltIcon />
+                <span className="font-semibold ml-3">Overview</span>
+              </div>
+            </Link>
+
+            <Link href={"/dashboard/calendar"}>
+              <div className="mb-4 flex items-center hover:text-blue-200">
+                <CalendarIcon />
+                <span className="font-semibold ml-3">Calendar</span>
+              </div>
+            </Link>
+
+            <Link href={"/dashboard/task"}>
+              <div className="mb-4 flex items-center hover:text-blue-200">
+                <BackpackIcon />
+                <span className="font-semibold ml-3">My Task</span>
+              </div>
+            </Link>
+
+            <Link href={"/dashboard/schedule"}>
+              <div className="mb-4 flex items-center hover:text-blue-200">
+                <TimerIcon />
+                <span className="font-semibold ml-3">Schedule</span>
+              </div>
+            </Link>
+
+            <Link href={"/dashboard/notification"}>
+              <div className="mb-4 flex items-center hover:text-blue-200">
+                <EnvelopeOpenIcon className="font-bold" />
+                <span className="font-semibold ml-3">Notification</span>
+              </div>
+            </Link>
           </SidebarContent>
         </div>
-        <CardFooter className="p-2">
+        <CardFooter className="p-2 hidden">
           <div className="flex flex-col bg-gray-200 dark:bg-gray-800 w-full rounded py-4 ">
             <div className="flex items-center justify-evenly">
               <div className="bg-yellow-200 px-5 py-5 items-center rounded-md">

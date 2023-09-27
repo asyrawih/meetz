@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 
 export const Sidebar = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(({ children, className }, ref) => {
   return (
-    <aside className="hidden md:flex flex-col md:w-1/4 xl:w-1/6 absolute z-9999">
+    <aside className="hidden md:flex flex-col md:w-1/4 xl:w-1/6">
       <Card className={cn("rounded-t-none h-screen", className)}>
         {children}
       </Card>
