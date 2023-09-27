@@ -5,13 +5,14 @@ import { cn } from "@/lib/utils"
 
 export const Sidebar = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(({ children, className }, ref) => {
   return (
-    <aside className="hidden md:flex flex-col w-1/6">
+    <aside className="hidden md:flex flex-col w-1/6 absolute z-9999">
       <Card className={cn("rounded-t-none h-screen", className)}>
         {children}
       </Card>
     </aside>
   )
 })
+Sidebar.displayName = "Sidebar"
 
 export const SidebarHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(({ children, className, ...props }, ref) => {
   return (
@@ -20,6 +21,7 @@ export const SidebarHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivEl
     </CardHeader>
   )
 })
+SidebarHeader.displayName = "SidebarHeader"
 
 
 export const SidebarContent = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(({ children, className, ...props }, ref) => {
@@ -29,3 +31,5 @@ export const SidebarContent = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivE
     </CardContent>
   )
 })
+
+SidebarContent.displayName = "SidebarContent"
