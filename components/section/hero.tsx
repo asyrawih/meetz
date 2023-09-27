@@ -2,7 +2,6 @@
 import { HTMLAttributes, createRef, forwardRef, useEffect, useRef } from "react"
 import { TeamIcon } from "../icon/team"
 import { Container } from "@/components/custom/container"
-import { cachedDataVersionTag } from "v8"
 
 export const Hero = () => {
   return (
