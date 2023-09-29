@@ -3,7 +3,7 @@ import { ThemeToggle } from "@/components/custom/toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { BackpackIcon, TimerIcon, EnvelopeOpenIcon, LightningBoltIcon, CalendarIcon, EnvelopeClosedIcon } from '@radix-ui/react-icons'
+import { BackpackIcon, TimerIcon, CameraIcon, EnvelopeOpenIcon, LightningBoltIcon, CalendarIcon, EnvelopeClosedIcon } from '@radix-ui/react-icons'
 import Link from "next/link";
 
 export default function DashboardLayout({ children, }: { children: React.ReactNode }) {
@@ -50,6 +50,13 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
               <div className="mb-4 flex items-center hover:text-blue-200">
                 <EnvelopeOpenIcon className="font-bold" />
                 <span className="font-semibold ml-3">Notification</span>
+              </div>
+            </Link>
+
+            <Link href={"/dashboard/meetings"}>
+              <div className="mb-4 flex items-center hover:text-blue-200">
+                <CameraIcon className="font-bold" />
+                <span className="font-semibold ml-3">meetings</span>
               </div>
             </Link>
 
