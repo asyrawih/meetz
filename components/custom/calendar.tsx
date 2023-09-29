@@ -58,6 +58,7 @@ export const Calendar = () => {
       selectable={true}
       select={handleRangeSelectedEvenet}
       unselect={handleUnSelectRange}
+      height={'100%'}
       plugins={[Daygrid, Interaction, TimeGridWeek]}
     />
   )
