@@ -12,6 +12,7 @@
   "dependencies": {
     "@fullcalendar/core": "^6.1.9",
     "@fullcalendar/daygrid": "^6.1.9",
+    "@fullcalendar/interaction": "^6.1.9",
     "@fullcalendar/react": "^6.1.9",
     "@livekit/components-react": "^1.2.2",
     "@livekit/components-styles": "^1.0.6",
