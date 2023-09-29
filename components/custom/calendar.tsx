@@ -14,19 +14,14 @@ type WithRange = {
 }
 
 type Events = WithRange & {
-  id: string
+  id?: string
   title?: string
   date?: string
 }
 
 export const Calendar = () => {
 
-  let events = [
-    { id: "1", title: "Event 1", start: "2023-09-06", end: "2023-09-10" },
-  ]
-
-  const [event, setEvent] = useState<Events[]>(events)
-
+  const [event, setEvent] = useState<Events[]>([])
 
   const handleRangeSelectedEvenet = async (arg: DateSelectArg) => {
     const min = 1;
@@ -39,7 +34,7 @@ export const Calendar = () => {
     console.log(event)
   }
 
-  const handleUnSelectRange = (arg : DateUnselectArg) => {
+  const handleUnSelectRange = (arg: DateUnselectArg) => {
     console.log(arg.view)
   }
 
