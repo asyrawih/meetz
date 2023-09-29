@@ -3,38 +3,62 @@
 import FullCalendar from "@fullcalendar/react"
 import Daygrid from "@fullcalendar/daygrid"
 import Interaction, { DateClickArg } from "@fullcalendar/interaction"
-import { ClassAttributes, useEffect, useRef } from "react"
-import { CalendarOptions, EventClickArg } from "@fullcalendar/core/index.js"
+import TimeGridWeek from "@fullcalendar/timegrid"
+import { ClassAttributes, useEffect, useRef, useState } from "react"
+import { CalendarOptions, DateSelectArg, DateUnselectArg, EventClickArg, EventInput, EventSourceInput } from "@fullcalendar/core/index.js"
 
+
+type WithRange = {
+  start?: string
+  end?: string
+}
+
+type Events = WithRange & {
+  id: string
+  title?: string
+  date?: string
+}
 
 export const Calendar = () => {
 
-  const ref = useRef(null)
+  let events = [
+    { id: "1", title: "Event 1", start: "2023-09-06", end: "2023-09-10" },
+  ]
 
-  const handlerEvent = (arg: DateClickArg) => {
-    alert(arg.dateStr)
+  const [event, setEvent] = useState<Events[]>(events)
+
+
+  const handleRangeSelectedEvenet = async (arg: DateSelectArg) => {
+    const min = 1;
+    const max = 10000;
+    const randomNumber = Math.random() * (max - min + 1) + min;
+    const id = randomNumber.toString()
+
+    let newEvent: Events = { id: id, title: `random - ${id}`, start: arg.startStr, end: arg.endStr }
+    setEvent(prev => [...prev, newEvent])
+    console.log(event)
   }
 
-  useEffect(() => {
+  const handleUnSelectRange = (arg : DateUnselectArg) => {
+    console.log(arg.view)
+  }
 
-  },[])
+
 
   return (
     <FullCalendar
-      ref={ref}
+      allDaySlot={false}
       headerToolbar={{
         start: "today prev next",
-        end: "dayGridMonth dayGridWeek dayGridDay",
+        right: "dayGridMonth,timeGridWeek,timeGridDay"
       }}
-      events={[
-        { title: "Event 1", date: "2023-09-06" },
-        { title: "Event 2", date: "2023-09-06" },
-        { title: "Event 2", date: "2023-09-29" },
-        { title: "Event 3", date: "2023-09-06", display: "test", color: "red" },
-      ]}
-      dateClick={handlerEvent}
-      plugins={[Daygrid, Interaction]}
+      dragScroll={true}
+      events={event}
+      editable={true}
+      selectable={true}
+      select={handleRangeSelectedEvenet}
+      unselect={handleUnSelectRange}
+      plugins={[Daygrid, Interaction, TimeGridWeek]}
     />
-
   )
 }
