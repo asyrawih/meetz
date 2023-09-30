@@ -3,10 +3,22 @@ import { ThemeToggle } from "@/components/custom/toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Database } from "@/lib/database";
 import { BackpackIcon, TimerIcon, CameraIcon, EnvelopeOpenIcon, LightningBoltIcon, CalendarIcon, EnvelopeClosedIcon } from '@radix-ui/react-icons'
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers"
 
-export default function DashboardLayout({ children, }: { children: React.ReactNode }) {
+const supabase = createServerComponentClient<Database>({
+  cookies,
+})
+
+export default async function DashboardLayout({ children, }: { children: React.ReactNode }) {
+  const { data: { session } } = await supabase.auth.getSession()
+  if (!session) {
+    redirect('/auth')
+  }
   return (
     <section className="flex">
       <Sidebar className="flex flex-col justify-between">

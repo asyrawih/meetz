@@ -31,7 +31,6 @@ export const Calendar = () => {
 
     let newEvent: Events = { id: id, title: `random - ${id}`, start: arg.startStr, end: arg.endStr }
     setEvent(prev => [...prev, newEvent])
-    console.log(event)
   }
 
   const handleUnSelectRange = (arg: DateUnselectArg) => {
