@@ -3,10 +3,22 @@ import { ThemeToggle } from "@/components/custom/toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { BackpackIcon, TimerIcon, EnvelopeOpenIcon, LightningBoltIcon, CalendarIcon, EnvelopeClosedIcon } from '@radix-ui/react-icons'
+import { Database } from "@/lib/database";
+import { BackpackIcon, TimerIcon, CameraIcon, EnvelopeOpenIcon, LightningBoltIcon, CalendarIcon, EnvelopeClosedIcon } from '@radix-ui/react-icons'
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers"
 
-export default function DashboardLayout({ children, }: { children: React.ReactNode }) {
+const supabase = createServerComponentClient<Database>({
+  cookies,
+})
+
+export default async function DashboardLayout({ children, }: { children: React.ReactNode }) {
+  const { data: { session } } = await supabase.auth.getSession()
+  if (!session) {
+    redirect('/auth')
+  }
   return (
     <section className="flex">
       <Sidebar className="flex flex-col justify-between">
@@ -50,6 +62,13 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
               <div className="mb-4 flex items-center hover:text-blue-200">
                 <EnvelopeOpenIcon className="font-bold" />
                 <span className="font-semibold ml-3">Notification</span>
+              </div>
+            </Link>
+
+            <Link href={"/dashboard/meetings"}>
+              <div className="mb-4 flex items-center hover:text-blue-200">
+                <CameraIcon className="font-bold" />
+                <span className="font-semibold ml-3">meetings</span>
               </div>
             </Link>
 
