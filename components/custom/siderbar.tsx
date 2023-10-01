@@ -1,6 +1,10 @@
+'use client'
 import { HTMLAttributes, forwardRef } from "react"
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card"
 import { cn } from "@/lib/utils"
+import { CalendarIcon } from "@radix-ui/react-icons"
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar"
+import { Button } from "../ui/button"
 
 
 export const Sidebar = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(({ children, className }, ref) => {
@@ -33,3 +37,13 @@ export const SidebarContent = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivE
 })
 
 SidebarContent.displayName = "SidebarContent"
+
+
+export const SidebarFooter = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(({ children, className, ...props }, ref) => {
+  return (
+    <CardFooter className={cn('p-3', className)} {...props}>
+      {children}
+    </CardFooter>
+  )
+})
+
