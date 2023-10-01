@@ -40,7 +40,6 @@ export const AuthSection = () => {
 
   return (
     <Card>
-      <Toaster />
       <CardHeader className="flex flex-row justify-between">
         <span>Login</span>
         <ThemeToggle />
@@ -76,17 +75,6 @@ const FormLogin = () => {
     })
 
     const session = await supabase.auth.getSession()
-
-    toast({
-      title: "debug",
-      description: (
-        <ScrollArea>
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">{JSON.stringify(session, null, 2)}</code>
-          </pre>
-        </ScrollArea>
-      )
-    })
     router.refresh()
   }
 
