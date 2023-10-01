@@ -13,7 +13,10 @@ type KanbanLaneProps = {
 
 export const KanbanLane = ({ title, items }: KanbanLaneProps) => {
   const { setNodeRef } = useDroppable({
-    id: title
+    id: title,
+    data: {
+      title: title,
+    }
   })
   return (
     <div ref={setNodeRef} className="flex w-1/3 flex-col min-h-[10rem] mx-2">
@@ -49,12 +52,12 @@ const KanbanItem = ({ title, index, parent }: KanBanItemProps) => {
 
   return (
     <div
-      className="flex dark:bg-gray-600 mx-2 my-2 p-3 border border-black"
+      className="flex dark:bg-gray-600 mx-2 my-2 p-3 rounded border border-black"
       id="kanban_item"
       style={{ transform: style.transform }}
+      ref={setNodeRef}
       {...attributes}
       {...listeners}
-      ref={setNodeRef}
     >
       {title}
     </div>

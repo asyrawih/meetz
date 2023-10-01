@@ -3,9 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import React from "react";
 
-export const dynamic = 'force-dynamic'
 export default function TaskPage() {
-
   return (
     <div className="ml-2 w-full p-5">
       <Card>
