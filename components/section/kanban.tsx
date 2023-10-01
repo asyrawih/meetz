@@ -1,9 +1,10 @@
 'use client'
-import { DndContext, DragEndEvent, rectIntersection} from "@dnd-kit/core"
+import { DndContext, DragEndEvent, rectIntersection } from "@dnd-kit/core"
 import { Item, KanbanLane } from "../custom/kanban-lane"
 import { useId, useState } from "react"
 import { toast } from "../ui/use-toast"
 import { Toaster } from "../ui/toaster"
+import { restrictToHorizontalAxis } from "@dnd-kit/modifiers"
 import test from "node:test"
 
 export const KanbanBoard = () => {
@@ -35,33 +36,32 @@ export const KanbanBoard = () => {
     const index = e.active.data.current?.index ?? 0;
     const parent = e.active.data.current?.parent ?? "ToDo";
 
-
-    if (container == 'todo') {
+    if (container == 'todo' && parent != 'todo') {
       setTodos([...todoItem, { title: title }])
-    } else if (container == 'progress') {
+    } else if (container == 'progress' && parent != 'progress') {
       setProgress([...progress, { title: title }])
-    } else if (container == 'test') {
+    } else if (container == 'test' && parent != 'test') {
       setTestAble([...testable, { title: title }])
-    } else if (container == 'done') {
+    } else if (container == 'done' && parent != 'done') {
       setDone([...done, { title: title }])
     }
 
-    if (parent == 'todo') {
+    if (parent == 'todo' && container != 'todo') {
       setTodos([
         ...todoItem.slice(0, index),
         ...todoItem.slice(index + 1)
       ])
-    } else if (parent === "progress") {
+    } else if (parent === "progress" && container != 'progress') {
       setProgress([
         ...progress.slice(0, index),
         ...progress.slice(index + 1)
       ])
-    } else if (parent == 'test') {
+    } else if (parent == 'test' && container != 'test') {
       setTestAble([
         ...testable.slice(0, index),
         ...testable.slice(index + 1),
       ])
-    } else if (parent == 'done') {
+    } else if (parent == 'done' && container != 'done') {
       setDone([
         ...done.slice(0, index),
         ...done.slice(index + 1)
@@ -72,7 +72,7 @@ export const KanbanBoard = () => {
       title: container as string,
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(e.active, null, 2)}</code>
+          <code className="text-white">{JSON.stringify(e.over, null, 2)}</code>
         </pre>
       ),
     })
@@ -82,7 +82,7 @@ export const KanbanBoard = () => {
   const id = useId()
 
   return (
-    <DndContext id={id} onDragEnd={_onDragEnd} collisionDetection={rectIntersection} >
+    <DndContext id={id} onDragEnd={_onDragEnd} collisionDetection={rectIntersection} modifiers={[restrictToHorizontalAxis]} >
       <Toaster />
       <div className="flex justify-between ml-2 mr-2">
         <KanbanLane title="todo" items={todoItem} />
