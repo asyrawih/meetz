@@ -1,12 +1,28 @@
 'use client'
-
 import Link from "next/link"
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from "../custom/siderbar"
 import { ThemeToggle } from "../custom/toggle"
 import { BackpackIcon, CalendarIcon, CameraIcon, EnvelopeClosedIcon, EnvelopeOpenIcon, LightningBoltIcon, TimerIcon } from "@radix-ui/react-icons"
 import { Button } from "../ui/button"
+import { SupabaseClient } from "@supabase/supabase-js"
+import { Database } from "@/lib/database"
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import { useRouter } from "next/navigation"
+
+interface SidebarProps {
+  logout: () => void
+}
 
 export const SidebarSection = () => {
+  const { auth } = createClientComponentClient()
+
+  const router = useRouter()
+
+  const signOut = async () => {
+    await auth.signOut()
+    router.refresh()
+  }
+
   return (
     <Sidebar className="flex flex-col justify-between">
       <div className="sidebar-header-content">
@@ -66,7 +82,7 @@ export const SidebarSection = () => {
           </Link>
         </SidebarContent>
         <SidebarFooter>
-          <Button onClick={() => alert('te')} className="w-full">Logout</Button>
+          <Button onClick={signOut} className="w-full">Logout</Button>
         </SidebarFooter>
       </div>
     </Sidebar>

@@ -11,18 +11,18 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers"
 import { SidebarSection } from "@/components/section/sidebar";
 
-const supabase = createServerComponentClient<Database>({
-  cookies,
-})
-
 export default async function DashboardLayout({ children, }: { children: React.ReactNode }) {
+
+  const supabase = createServerComponentClient<Database>({
+    cookies,
+  })
+
   const { data: { session } } = await supabase.auth.getSession()
   if (!session) {
     redirect('/auth')
   }
 
-  const logout = () => {
-    supabase.auth.signOut()
+  const logout = async () => {
   }
 
   return (
