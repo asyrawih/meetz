@@ -10,6 +10,8 @@
     "shad": "npx shadcn-ui@latest"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.0.8",
+    "@dnd-kit/modifiers": "^6.0.1",
     "@fullcalendar/core": "^6.1.9",
     "@fullcalendar/daygrid": "^6.1.9",
     "@fullcalendar/interaction": "^6.1.9",
@@ -33,6 +35,7 @@
     "@supabase/auth-ui-react": "^0.4.5",
     "@supabase/auth-ui-shared": "^0.1.7",
     "@supabase/supabase-js": "^2.37.0",
+    "@tanstack/react-table": "^8.10.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "debug": "^4.3.4",
