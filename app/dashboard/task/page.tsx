@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import React from "react";
 
+export const dynamic = 'force-dynamic'
 export default function TaskPage() {
 
   return (
@@ -13,7 +14,7 @@ export default function TaskPage() {
             <h1 className="text-2xl font-semibold">Task</h1>
           </div>
         </CardHeader>
-          <KanbanBoard />
+        <KanbanBoard />
         <CardContent>
         </CardContent>
         <CardFooter>
