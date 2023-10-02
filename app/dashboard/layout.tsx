@@ -10,20 +10,23 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers"
 import { SidebarSection } from "@/components/section/sidebar";
+import { cache } from "react";
+
+
 
 export default async function DashboardLayout({ children, }: { children: React.ReactNode }) {
-
-  const supabase = createServerComponentClient<Database>({
-    cookies,
+  const createServerSupabaseClient = cache(() => {
+    const cookieStore = cookies()
+    return createServerComponentClient({ cookies: () => cookieStore })
   })
+
+  const supabase = createServerSupabaseClient()
 
   const { data: { session } } = await supabase.auth.getSession()
   if (!session) {
     redirect('/auth')
   }
 
-  const logout = async () => {
-  }
 
   return (
     <section className="flex">
