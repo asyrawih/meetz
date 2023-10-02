@@ -1,7 +1,6 @@
 'use client'
 import { CreateTaskForm } from "@/components/custom/CreateTaskForm";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from "@radix-ui/react-context-menu";
 import { useRouter } from "next/router";
 import { KanbanBoard } from "@/components/section/kanban";
 
