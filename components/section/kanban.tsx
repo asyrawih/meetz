@@ -5,10 +5,9 @@ import { useCallback, useEffect, useId, useState } from "react"
 import { toast } from "../ui/use-toast"
 import { Toaster } from "../ui/toaster"
 import { restrictToHorizontalAxis } from "@dnd-kit/modifiers"
-import test from "node:test"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { RealtimePostgresChangesPayload } from "@supabase/supabase-js"
-import { Console, log } from "console"
+import { useTodos } from "@/hooks/todo"
 
 export type Todo = {
   id: string
@@ -21,53 +20,13 @@ const supabase = createClientComponentClient()
 
 
 export const KanbanBoard = () => {
-  const [todoItem, setTodos] = useState<Array<Todo>>([])
   const [activeId, setActive] = useState<string | null>(null)
-
+  const { todos: todoItem, setTodos, updateTask } = useTodos()
 
   const sensor = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: { delay: 100, tolerance: 100 }
     }))
-
-
-  const getTodo = async () => {
-    const result = await supabase.from('todos').select('*')
-    return result.data as Array<Todo>
-  }
-
-  const updateTask = async ({ id, status }: { id: string, status: string }) => {
-    const { data, error } = await supabase.from('todos').update({ status }).eq('id', id).select()
-  }
-
-  const handleSupabaseEvent = (some: RealtimePostgresChangesPayload<{}>) => {
-    const changedData = some.new as Todo
-    if (some.eventType == 'UPDATE') {
-      setTodos(prevTodos => {
-        const updatedTodos = prevTodos.map(todo => {
-          if (todo.id === changedData.id) {
-            return changedData;
-          }
-          return todo;
-        });
-        return updatedTodos;
-      });
-
-      toast({ title: 'NEW UPDATED', description: changedData.title })
-    }
-    if (some.eventType === 'INSERT') {
-      toast({ title: 'NEW INSERTED', description: changedData.title })
-      setTodos(pre => [...pre, changedData])
-    }
-  }
-
-  useEffect(() => {
-    getTodo().then(res => setTodos(res))
-    supabase.channel('todos').on('postgres_changes', { event: '*', schema: 'public', }, handleSupabaseEvent).subscribe()
-    return () => {
-      supabase.channel('todos').unsubscribe()
-    }
-  }, [])
 
 
   const _onDragEnd = async (e: DragEndEvent) => {
