@@ -1,5 +1,5 @@
 'use client'
-import { DndContext, DragEndEvent, DragOverEvent, DragStartEvent, rectIntersection } from "@dnd-kit/core"
+import { DndContext, DragEndEvent, DragOverEvent, DragStartEvent, PointerSensor, rectIntersection, useSensor, useSensors } from "@dnd-kit/core"
 import { Item, KanbanLane } from "../custom/kanban-lane"
 import { useCallback, useEffect, useId, useState } from "react"
 import { toast } from "../ui/use-toast"
@@ -23,6 +23,13 @@ const supabase = createClientComponentClient()
 export const KanbanBoard = () => {
   const [todoItem, setTodos] = useState<Array<Todo>>([])
   const [activeId, setActive] = useState<string | null>(null)
+
+
+  const sensor = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: { delay: 100, tolerance: 100 }
+    }))
+
 
   const getTodo = async () => {
     const result = await supabase.from('todos').select('*')
@@ -83,6 +90,7 @@ export const KanbanBoard = () => {
       onDragStart={_onDragStart}
       onDragOver={_onDragOver}
       onDragEnd={_onDragEnd}
+      sensors={sensor}
       collisionDetection={rectIntersection}
     >
       <Toaster />
