@@ -2,7 +2,9 @@
 import { useDraggable, useDroppable } from "@dnd-kit/core"
 import { CSS } from "@dnd-kit/utilities"
 import { Todo } from "../section/kanban"
-import { useId } from "react"
+import { useId, useState } from "react"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog"
+import { Button } from "../ui/button"
 
 export type Item = {
   title: string
@@ -40,7 +42,7 @@ type KanBanItemProps = {
 }
 
 const KanbanItem = ({ title, index, parent }: KanBanItemProps) => {
-  const { attributes, transform, listeners, setNodeRef } = useDraggable({
+  const { isDragging, attributes, transform, listeners, setNodeRef } = useDraggable({
     id: index,
     data: {
       title,
@@ -53,16 +55,37 @@ const KanbanItem = ({ title, index, parent }: KanBanItemProps) => {
     transform: CSS.Translate.toString(transform)
   }
 
+  const [isOpen, setOpen] = useState(false)
+
   return (
     <div
-      className="flex dark:bg-gray-600 mx-2 my-2 p-3 rounded border border-black"
-      id="kanban_item"
+      onClick={() => !isDragging ? setOpen(!isOpen) : null}
+      className="flex dark:bg-gray-600  mx-2 my-2 p-3 rounded border border-black"
       style={{ transform: style.transform }}
       ref={setNodeRef}
       {...attributes}
       {...listeners}
     >
-      {title}
+      <div
+        className="flex flex-col">
+        <div className="font-bold">
+          {title}
+        </div>
+        <div className="font-semibold">
+          content
+        </div>
+      </div>
+      <Dialog open={isOpen} onOpenChange={setOpen} >
+        <DialogContent className="sm:max-w-[600px]">
+          <DialogHeader>
+            <DialogTitle>{title}</DialogTitle>
+            <DialogDescription>
+              content
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </div>
+
   )
 }

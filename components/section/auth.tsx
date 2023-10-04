@@ -48,7 +48,7 @@ export const AuthSection = () => {
         <FormLogin />
       </CardContent>
       <CardDescription className="p-3">
-        Please Login For Access Full Feature
+        you can user email: hadi@test.com and password: test123
       </CardDescription>
       <CardFooter>
       </CardFooter>
