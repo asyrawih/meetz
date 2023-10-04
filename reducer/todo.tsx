@@ -15,7 +15,7 @@ export const initialState: TodoState = {
 }
 
 type Action =
-  | { type: "FETCH_TODO" }
+  | { type: "FETCH_TODO", isLoading: boolean }
   | { type: "FETCH_TODO_SUCCESS", payload: Todo[] }
   | { type: "FETCH_TODO_FAIL", error: string }
 
@@ -43,14 +43,13 @@ export const reducer = (state: TodoState, action: Action): TodoState => {
 const supabase = createClientComponentClient()
 export const useTodoReducer = () => {
   const [state, dispatcher] = useReducer(reducer, initialState)
-
   const getTodo = async () => {
     const result = await supabase.from('todos').select('*')
     return result.data as Array<Todo>
   }
   // Need Full Fill State Todo
   useEffect(() => {
-    dispatcher({ type: "FETCH_TODO" })
+    dispatcher({ type: "FETCH_TODO", isLoading: true })
     getTodo().then(res => {
       dispatcher({ type: "FETCH_TODO_SUCCESS", payload: res })
     }).catch(err => {

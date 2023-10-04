@@ -21,32 +21,29 @@ export const useTodos = () => {
     const result = await supabase.from('todos').select('*')
     return result.data as Array<Todo>
   }
-
   const handleSupabaseEvent = (some: RealtimePostgresChangesPayload<{}>) => {
     const changedData = some.new as Todo
-    if (some.eventType == 'UPDATE') {
-      setTodos(prevTodos => {
-        const updatedTodos = prevTodos.map(todo => {
-          if (todo.id === changedData.id) {
-            return changedData;
-          }
-          return todo;
-        });
-        return updatedTodos;
+
+    const observeOnUpdate = (todos: Todo[]) => {
+      const updatedTodos = todos.map(todo => {
+        if (todo.id === changedData.id) return changedData;
+        return todo;
       });
-
-      toast({
-        title: "Updated Task",
-        description: changedData.title
-      })
-
+      return updatedTodos;
     }
-    if (some.eventType === 'INSERT') {
-      setTodos(pre => [...pre, changedData])
-      toast({
-        title: "New Task",
-        description: changedData.title
-      })
+
+    const observeOnInsert = (todos: Todo[]) => {
+      return [...todos, changedData]
+    }
+
+    switch (some.eventType) {
+      case "INSERT":
+        setTodos(observeOnInsert)
+        toast({ title: "New Task", description: changedData.title })
+      case "UPDATE":
+        setTodos(observeOnUpdate);
+        toast({ title: "Updated Task", description: changedData.title })
+      case "DELETE":
     }
   }
 

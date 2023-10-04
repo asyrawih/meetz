@@ -21,7 +21,7 @@ const supabase = createClientComponentClient()
 
 export const KanbanBoard = () => {
   const [activeId, setActive] = useState<string | null>(null)
-  const { todos: todoItem, setTodos, updateTask } = useTodos()
+  const { todos: todoItem, updateTask } = useTodos()
 
   const sensor = useSensors(
     useSensor(PointerSensor, {

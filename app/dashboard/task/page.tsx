@@ -1,4 +1,3 @@
-'use client'
 import { CreateTaskForm } from "@/components/custom/CreateTaskForm";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { useRouter } from "next/router";

@@ -1,8 +1,12 @@
+import { Counter } from "@/components/custom/counter";
+import { TodoContextProvider } from "@/provider/todo";
 
 export default function OverviewPage() {
   return (
     <>
-      OverviewPage
+      <TodoContextProvider>
+        <Counter />
+      </TodoContextProvider>
     </>
   )
 }
