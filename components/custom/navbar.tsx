@@ -20,6 +20,7 @@ import {
 
 import { Button } from "../ui/button"
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons"
+import Link from "next/link"
 
 const menuItem = [
   "Home",
@@ -39,6 +40,9 @@ export default function Navbar() {
           <ul className="inline-flex mx-3">
             <li className="mx-2 cursor-pointer">Projects</li>
             <li className="mx-2 cursor-pointer">About</li>
+            <li className="mx-2 cursor-pointer">
+              <Link href={'/auth'}>Login</Link>
+            </li>
           </ul>
           <ThemeToggle />
         </div>
