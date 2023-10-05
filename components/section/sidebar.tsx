@@ -1,36 +1,71 @@
-'use client'
-import Link from "next/link"
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from "../custom/siderbar"
-import { ThemeToggle } from "../custom/toggle"
-import { BackpackIcon, CalendarIcon, CameraIcon, EnvelopeClosedIcon, EnvelopeOpenIcon, LightningBoltIcon, TimerIcon } from "@radix-ui/react-icons"
-import { Button } from "../ui/button"
-import { SupabaseClient } from "@supabase/supabase-js"
-import { Database } from "@/lib/database"
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
-import { useRouter } from "next/navigation"
+"use client";
+import Link from "next/link";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+} from "../custom/siderbar";
+import { ThemeToggle } from "../custom/toggle";
+import {
+  BackpackIcon,
+  CalendarIcon,
+  CameraIcon,
+  EnvelopeClosedIcon,
+  EnvelopeOpenIcon,
+  LightningBoltIcon,
+  TimerIcon,
+} from "@radix-ui/react-icons";
+import { Button } from "../ui/button";
+import { SupabaseClient } from "@supabase/supabase-js";
+import { Database } from "@/lib/database";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface SidebarProps {
-  logout: () => void
+  logout: () => void;
 }
 
 export const SidebarSection = () => {
-  const { auth } = createClientComponentClient()
+  const { auth } = createClientComponentClient();
+  const [dataUser, setDataUser] = useState(null);
 
-  const router = useRouter()
+  const router = useRouter();
 
   const signOut = async () => {
-    await auth.signOut()
-    router.refresh()
-  }
+    await auth.signOut();
+    router.refresh();
+  };
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const supabase = createClientComponentClient();
+      try {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        console.log("Data User : ", user);
+        setDataUser(user);
+      } catch (error) {
+        console.error("Error Fetch Data User : ", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   return (
     <Sidebar className="flex flex-col justify-between">
       <div className="sidebar-header-content">
         <SidebarHeader className="flex border border-gray-100-black">
           <div className="flex justify-between">
-            <div className="inline-flex items-center text-2xl">Meetz</div>
+            <div className="inline-flex items-center font-semibold text-4xl">
+              Meetz
+            </div>
             <ThemeToggle />
           </div>
+          <h1 className="text-center pt-3">Hello, {dataUser?.email}</h1>
         </SidebarHeader>
         <SidebarContent className="mt-4 mb-2">
           <Link href={"/dashboard/overview"}>
@@ -82,9 +117,11 @@ export const SidebarSection = () => {
           </Link>
         </SidebarContent>
         <SidebarFooter>
-          <Button onClick={signOut} className="w-full">Logout</Button>
+          <Button onClick={signOut} className="w-full">
+            Logout
+          </Button>
         </SidebarFooter>
       </div>
     </Sidebar>
-  )
-}
+  );
+};
