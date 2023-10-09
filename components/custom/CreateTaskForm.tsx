@@ -108,22 +108,22 @@ export const CreateTaskForm = () => {
                   <FormLabel className="font-semibold leading-4 tracking-wider">
                     Status
                   </FormLabel>
-                  <FormControl className="w-full">
-                    <Select>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select a Status" />
                       </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Status</SelectLabel>
-                          <SelectItem value="todo">Todo</SelectItem>
-                          <SelectItem value="progress">Progress</SelectItem>
-                          <SelectItem value="test">Test</SelectItem>
-                          <SelectItem value="done">Done</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="todo">Todo</SelectItem>
+                      <SelectItem value="progress">Progress</SelectItem>
+                      <SelectItem value="test">Test</SelectItem>
+                      <SelectItem value="done">Done</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
