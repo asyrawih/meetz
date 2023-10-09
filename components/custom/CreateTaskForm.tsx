@@ -51,7 +51,7 @@ export const CreateTaskForm = () => {
     resolver: zodResolver(FormSchema),
     defaultValues: {
       title: "",
-      status: "",
+      status: "todo",
       description: "",
     },
   });
