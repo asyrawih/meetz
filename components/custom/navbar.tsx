@@ -9,25 +9,35 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { User, createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const menuItem = ["Home", "About", "Projects"];
 
-export default function Navbar() {
-  const [dataUser, setDataUser] = useState(null);
+const LoginUserState = ({ user }: { user?: User }) => {
+  return (
+    <>
+      <li className="mx-2 cursor-pointer">
+        <Link href={"/dashboard"}>Dashboard</Link>
+      </li>
+      <li className="mx-2 font-semibold">Hello, {user != null ? user.email : "loading..."}</li>
+    </>
+  )
+}
 
+export default function Navbar() {
+  const [dataUser, setDataUser] = useState<User | null>(null);
+  const user = useMemo(() => dataUser, [dataUser])
   useEffect(() => {
     const fetchUserData = async () => {
       const supabase = createClientComponentClient();
       try {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-        console.log("Data User : ", user);
-        setDataUser(user);
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+          setDataUser(session.user);
+        }
       } catch (error) {
         console.error("error fetch data user : ", error);
       }
@@ -35,6 +45,7 @@ export default function Navbar() {
 
     fetchUserData();
   }, []);
+
 
   return (
     <nav className="bg-white border-gray-200 dark:bg-card dark:border-gray-700">
@@ -48,18 +59,7 @@ export default function Navbar() {
           <ul className="inline-flex mx-3">
             <li className="mx-2 cursor-pointer">Projects</li>
             <li className="mx-2 cursor-pointer">About</li>
-            {dataUser !== null ? (
-              <>
-                <li className="mx-2 cursor-pointer">
-                  <Link href={"/dashboard"}>Dashboard</Link>
-                </li>
-                <li className="mx-2 font-semibold">Hello, {dataUser?.email}</li>
-              </>
-            ) : (
-              <li className="mx-2 cursor-pointer">
-                <Link href={"/auth"}>Login</Link>
-              </li>
-            )}
+            {user !== null ? <LoginUserState user={user} /> : <span>Loading..</span>}
           </ul>
           <ThemeToggle />
         </div>
