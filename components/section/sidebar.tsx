@@ -19,7 +19,10 @@ import {
 import { Button } from "../ui/button";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Database } from "@/lib/database";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import {
+  User,
+  createClientComponentClient,
+} from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -29,7 +32,7 @@ interface SidebarProps {
 
 export const SidebarSection = () => {
   const { auth } = createClientComponentClient();
-  const [dataUser, setDataUser] = useState(null);
+  const [dataUser, setDataUser] = useState<User | null>(null);
 
   const router = useRouter();
 
